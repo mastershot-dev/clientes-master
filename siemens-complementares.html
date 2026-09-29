@@ -137,12 +137,12 @@
       },
       {
         nome: "Siemens Fundo Neutro",
-        desc: "Fotos complementares — com o fundo (JPEG); versão recortada (PNG) parcial",
+        desc: "Fotos complementares — com o fundo (JPEG) e recortada (PNG)",
         dias: [
           { dia: "Dia 01", grupos: [
-            { rotulo:"Complementares", obs:"imagens adicionais", n:74, links:[
-              { label:"Com fundo (JPEG)", url:"https://drive.google.com/drive/folders/13N7HjfBuaGyrLCR-ChvRojmLfhsS0F-D?usp=sharing" },
-              { label:"Recortadas (PNG) · 10", url:"https://drive.google.com/drive/folders/1ATmrGcRLQibK3PZEye62yE6qbJtfdE-4?usp=sharing" }
+            { formatos:[
+              { rotulo:"Com fundo (JPEG)", obs:"imagens adicionais", n:74, url:"https://drive.google.com/drive/folders/13N7HjfBuaGyrLCR-ChvRojmLfhsS0F-D?usp=sharing" },
+              { rotulo:"Recortadas (PNG)", obs:"imagens adicionais", n:10, url:"https://drive.google.com/drive/folders/1ATmrGcRLQibK3PZEye62yE6qbJtfdE-4?usp=sharing" }
             ]}
           ]},
           { dia: "Dia 02", grupos: [] }
@@ -165,23 +165,25 @@
 
   DADOS.colecoes.forEach(c => {
     let cTot = 0;
+    const gCount = g => g.formatos ? Math.max.apply(null, g.formatos.map(f=>f.n)) : g.n;
     const diasHtml = c.dias.map(d => {
-      const known = d.grupos.filter(g => g.n != null);
+      const known = d.grupos.filter(g => gCount(g) != null);
       if (known.length === 0) {
         return `<div class="day"><div class="dayhead">${d.dia} <span class="soon">em breve</span></div>
                   <div class="soonstrip">Fotos em produção</div></div>`;
       }
-      const dTot = known.reduce((s,g)=>s+g.n,0); cTot += dTot;
-      const rows = d.grupos.map(g => {
-        const btns = g.links
-          ? g.links.map(l=>`<a class="btn" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join('')
-          : `<a class="btn" href="${g.url}" target="_blank" rel="noopener">Ver fotos</a>`;
-        return `
+      const dTot = known.reduce((s,g)=>s+gCount(g),0); cTot += dTot;
+      const rowHtml = (n,rotulo,obs,url) => `
         <div class="row">
-          <span class="rn">${fmt(g.n)}</span>
-          <span class="rl">${g.rotulo}<small>${g.obs||''}</small></span>
-          <span class="btns">${btns}</span>
+          <span class="rn">${fmt(n)}</span>
+          <span class="rl">${rotulo}<small>${obs||''}</small></span>
+          <span class="btns"><a class="btn" href="${url}" target="_blank" rel="noopener">Ver fotos</a></span>
         </div>`;
+      const rows = d.grupos.map(g => {
+        if (g.formatos) {
+          return g.formatos.map(f => rowHtml(f.n, f.rotulo, f.obs, f.url)).join('');
+        }
+        return rowHtml(g.n, g.rotulo, g.obs, g.url);
       }).join('');
       return `<div class="day"><div class="dayhead">${d.dia}</div><div class="rows">${rows}</div></div>`;
     }).join('');
