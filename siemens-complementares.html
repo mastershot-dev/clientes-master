@@ -3,31 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Entrega de Fotos · Siemens</title>
+<title>Complementares · Siemens</title>
 <meta name="description" content="Central de entrega de fotos — Siemens. Produção Master Shot / happy.">
 <style>
   :root{
-    --petrol:#009999;
-    --petrol-d:#007A7A;
+    --petrol:#A6791E;
+    --petrol-d:#87611A;
     --ink:#000028;
     --muted:#5b6472;
     --line:#e7eaee;
     --bg:#f4f6f8;
     --card:#ffffff;
-    --chip:#eef6f6;
+    --chip:#FAF3E3;
     --soon:#93a0af;
     --shadow:0 1px 2px rgba(0,0,40,.04),0 8px 24px rgba(0,0,40,.06);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --petrol:#2fd0d0;--petrol-d:#1fb8b8;--ink:#eef2f6;--muted:#9aa6b4;
-      --line:#243040;--bg:#0c1118;--card:#141b25;--chip:#132523;--soon:#5b6675;
+      --petrol:#E3B94E;--petrol-d:#C99A3B;--ink:#eef2f6;--muted:#9aa6b4;
+      --line:#243040;--bg:#0c1118;--card:#141b25;--chip:#26200F;--soon:#5b6675;
       --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.5);
     }
   }
   :root[data-theme="dark"]{
-    --petrol:#2fd0d0;--petrol-d:#1fb8b8;--ink:#eef2f6;--muted:#9aa6b4;
-    --line:#243040;--bg:#0c1118;--card:#141b25;--chip:#132523;--soon:#5b6675;
+    --petrol:#E3B94E;--petrol-d:#C99A3B;--ink:#eef2f6;--muted:#9aa6b4;
+    --line:#243040;--bg:#0c1118;--card:#141b25;--chip:#26200F;--soon:#5b6675;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.5);
   }
   *{box-sizing:border-box;}
@@ -97,7 +97,7 @@
       <img id="logoCli" alt="Siemens" src="data:image/png;base64,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">
     </div>
     <div class="hero">
-      <div class="kick">Entrega de fotos</div>
+      <div class="kick">Complementares</div>
       <h1 id="titulo">Siemens Life 2026</h1>
       <p class="sub" id="sub">Registro fotográfico — acesso às fotos entregues.</p>
     </div>
@@ -122,15 +122,15 @@
     cliente: "Siemens",
     agencia: "happy",
     produtora: "Master Shot",
-    evento: "Siemens Life 2026",
-    subtitulo: "Registro fotográfico — acesso às fotos entregues.",
+    evento: "Siemens Life 2026 — Complementares",
+    subtitulo: "Imagens complementares — fora da seleção principal.",
     colecoes: [
       {
         nome: "Siemens Life",
         desc: "Fotos da empresa",
         dias: [
           { dia: "Dia 01", grupos: [
-            { rotulo:"Principais", obs:"seleção principal", n:313, url:"https://drive.google.com/drive/folders/1gLCUjUs6PBXzj8QfIOag7ByVvSwRutct?usp=sharing" }
+            { rotulo:"Complementares", obs:"imagens adicionais", n:62, url:"https://drive.google.com/drive/folders/1R6jkE2jkA2LlkLr9pdE2cmLErxycYkZk?usp=sharing" }
           ]},
           { dia: "Dia 02", grupos: [] }
         ]
@@ -140,9 +140,9 @@
         desc: "Mesmas fotos em dois formatos — recortada (PNG) e com o fundo (JPEG)",
         dias: [
           { dia: "Dia 01", grupos: [
-            { rotulo:"Principais", obs:"seleção principal", n:451, links:[
-              { label:"Recortadas (PNG)", url:"https://drive.google.com/drive/folders/1KBdSVOaWkYaeoLqD8AqJ08nAO-S6PSa3?usp=sharing" },
-              { label:"Com fundo (JPEG)", url:"https://drive.google.com/drive/folders/1Q1aPkXUfMzcF4nSgfOmX10MqwD9IV8dY?usp=sharing" }
+            { rotulo:"Complementares", obs:"imagens adicionais", n:10, links:[
+              { label:"Recortadas (PNG)", url:"https://drive.google.com/drive/folders/1ATmrGcRLQibK3PZEye62yE6qbJtfdE-4?usp=sharing" },
+              { label:"Com fundo (JPEG)", url:"https://drive.google.com/drive/folders/13N7HjfBuaGyrLCR-ChvRojmLfhsS0F-D?usp=sharing" }
             ]}
           ]},
           { dia: "Dia 02", grupos: [] }
