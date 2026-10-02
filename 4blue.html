@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registro · Máquina de Lucros · 4blue</title>
+<meta name="description" content="Registro audiovisual do Workshop Máquina de Lucros — 4blue. Produção Master Shot.">
+<style>
+  :root{
+    --blue:#0b63ce;--blue-d:#0a52ab;--ink:#0a1222;--muted:#5b6472;--line:#e7eaee;
+    --bg:#f4f6f8;--card:#ffffff;--chip:#eef3fb;--soon:#93a0af;
+    --shadow:0 1px 2px rgba(0,0,40,.04),0 8px 24px rgba(0,0,40,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --blue:#5aa0ff;--blue-d:#3f86ec;--ink:#eef2f6;--muted:#9aa6b4;
+      --line:#243040;--bg:#0c1118;--card:#141b25;--chip:#15233a;--soon:#5b6675;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --blue:#5aa0ff;--blue-d:#3f86ec;--ink:#eef2f6;--muted:#9aa6b4;
+    --line:#243040;--bg:#0c1118;--card:#141b25;--chip:#15233a;--soon:#5b6675;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 16px 56px;}
+  header{padding:26px 0 20px;}
+  .brandbar{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .brandbar img{height:48px;width:48px;border-radius:11px;display:block;box-shadow:var(--shadow);}
+  .ms{font-weight:800;letter-spacing:-.01em;font-size:16px;color:var(--ink);
+    border:1px solid var(--line);border-radius:11px;padding:10px 14px;box-shadow:var(--shadow);background:var(--card);}
+  .ms small{display:block;font-weight:600;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+  .hero{margin-top:30px;}
+  .kick{color:var(--blue);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:11px;}
+  h1{font-size:30px;line-height:1.15;margin:8px 0 6px;font-weight:800;letter-spacing:-.01em;}
+  .sub{color:var(--muted);font-size:15px;margin:0;}
+  .total{margin-top:24px;background:linear-gradient(135deg,var(--blue),var(--blue-d));color:#fff;
+    border-radius:16px;padding:20px 24px;box-shadow:var(--shadow);font-size:14.5px;font-weight:600;}
+  .total b{font-weight:800;}
+  .grid{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media (max-width:660px){ .grid{grid-template-columns:1fr;} }
+  .col{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;box-shadow:var(--shadow);}
+  .col h2{font-size:19px;margin:0;font-weight:800;letter-spacing:-.01em;}
+  .col .cdesc{color:var(--muted);font-size:13.5px;margin:3px 0 0;}
+  .day{margin-top:16px;}
+  .dayhead{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+    display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .dayhead .soon{font-size:10px;font-weight:700;color:var(--soon);background:var(--chip);
+    border-radius:20px;padding:2px 9px;letter-spacing:.04em;text-transform:none;}
+  .row{display:flex;align-items:center;gap:12px;background:var(--chip);border-radius:11px;padding:13px;}
+  .row .rl{font-size:14px;font-weight:700;color:var(--ink);}
+  .row .rl small{display:block;font-weight:500;color:var(--muted);font-size:12px;}
+  .row a.btn{margin-left:auto;text-decoration:none;font-size:13px;font-weight:700;color:#fff;background:var(--blue);
+    padding:9px 15px;border-radius:9px;white-space:nowrap;transition:background .15s;}
+  .row a.btn:hover{background:var(--blue-d);}
+  .soonstrip{background:var(--chip);border:1px dashed var(--line);border-radius:11px;padding:12px 13px;
+    color:var(--soon);font-size:13px;font-weight:600;text-align:center;}
+  footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;}
+  footer b{color:var(--ink);}
+  .theme{cursor:pointer;background:none;border:1px solid var(--line);color:var(--muted);
+    border-radius:8px;padding:5px 10px;font-size:12px;font-family:inherit;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brandbar">
+      <div class="ms"><small>Produção</small>Master Shot</div>
+      <img alt="4blue" src="data:image/png;base64,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">
+    </div>
+    <div class="hero">
+      <div class="kick">Registro audiovisual</div>
+      <h1>Máquina de Lucros</h1>
+      <p class="sub">4blue · São José dos Campos · 29–30 de setembro de 2026</p>
+    </div>
+  </header>
+
+  <div class="total">
+    <b>Material bruto do evento.</b> Baixe e guarde os arquivos — eles ficam disponíveis por tempo limitado.
+  </div>
+
+  <div class="grid">
+    <section class="col">
+      <h2>Vídeo</h2>
+      <p class="cdesc">Gravação em vídeo do evento</p>
+      <div class="day">
+        <div class="dayhead">Dia 01 · 29/09</div>
+        <div class="row"><span class="rl">Vídeo<small>arquivos .MP4</small></span>
+          <a class="btn" href="https://drive.google.com/drive/folders/17PyaYw96C1ooaoBIAN5Ox8MHGMbt_6_W?usp=sharing" target="_blank" rel="noopener">Abrir pasta</a></div>
+      </div>
+      <div class="day">
+        <div class="dayhead">Dia 02 · 30/09 <span class="soon">em breve</span></div>
+        <div class="soonstrip">Em processamento</div>
+      </div>
+    </section>
+
+    <section class="col">
+      <h2>Áudio</h2>
+      <p class="cdesc">Gravador + 2 lapelas</p>
+      <div class="day">
+        <div class="dayhead">Dia 01 · 29/09</div>
+        <div class="row"><span class="rl">Áudio<small>ZOOM H5 + 2 lapelas</small></span>
+          <a class="btn" href="https://drive.google.com/drive/folders/1B6MWaPUdZEa5tPSLTWftK2dUD8LBXu1t?usp=sharing" target="_blank" rel="noopener">Abrir pasta</a></div>
+      </div>
+      <div class="day">
+        <div class="dayhead">Dia 02 · 30/09 <span class="soon">em breve</span></div>
+        <div class="soonstrip">Em processamento</div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div>Produção <b>Master Shot</b> — para <b>4blue</b></div>
+    <button class="theme" id="theme">Tema</button>
+  </footer>
+</div>
+<script>
+  const root = document.documentElement;
+  try{ const t = localStorage.getItem('4blue-theme'); if(t) root.setAttribute('data-theme', t); }catch(e){}
+  document.getElementById('theme').addEventListener('click', ()=>{
+    const cur = root.getAttribute('data-theme');
+    const dark = cur ? cur==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    try{ localStorage.setItem('4blue-theme', dark ? 'light' : 'dark'); }catch(e){}
+  });
+</script>
+</body>
+</html>
