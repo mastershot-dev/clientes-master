@@ -91,6 +91,13 @@
   .pecas{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start;}
   @media(max-width:900px){ .pecas{grid-template-columns:repeat(2,1fr);gap:14px;} }
   @media(max-width:600px){ .pecas{grid-template-columns:1fr;} }
+  /* layout 'apresentacao': capa em destaque + demais em 2 colunas */
+  .pecas.apresentacao{grid-template-columns:repeat(2,1fr);gap:22px;}
+  .pecas.apresentacao .peca:first-child{grid-column:1/-1;}
+  .pecas.apresentacao .peca:first-child button{border-radius:16px;}
+  .pecas.apresentacao .peca:first-child button:hover img{transform:scale(1.015);}
+  .pecas.apresentacao .peca:first-child figcaption{font-size:1rem;margin-top:14px;}
+  @media(max-width:600px){ .pecas.apresentacao{grid-template-columns:1fr;gap:16px;} }
   .peca{margin:0;}
   .peca button{position:relative;display:block;width:100%;padding:0;border:1px solid var(--line);background:var(--bg-card);
     cursor:zoom-in;border-radius:12px;overflow:hidden;transition:.3s;}
@@ -101,6 +108,13 @@
   .peca button:hover img{transform:scale(1.04);}
   .peca button:hover::after{opacity:1;}
   .peca button:focus-visible{outline:2px solid var(--acc);outline-offset:3px;}
+  .peca .zoom{position:absolute;right:14px;bottom:14px;z-index:2;width:40px;height:40px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;color:var(--cream);background:rgba(7,7,7,.55);
+    border:1px solid rgba(236,229,213,.22);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    opacity:0;transform:translateY(6px);transition:.3s;}
+  .peca .zoom svg{width:18px;height:18px;}
+  .peca button:hover .zoom,.peca button:focus-visible .zoom{opacity:1;transform:none;}
+  @media(hover:none){ .peca .zoom{opacity:1;transform:none;} }
   .peca figcaption{display:flex;gap:10px;align-items:baseline;margin-top:12px;font-size:.92rem;color:var(--body);}
   .peca figcaption b{font-size:.68rem;letter-spacing:.18em;color:var(--yellow);font-weight:700;}
 
@@ -215,16 +229,22 @@
      Acrescentar uma peça: jogar o arquivo em assets/portfolio/<id>/
      e somar uma linha em `imagens`. Nada além disso.
      estado: 'pronto' | 'em breve'  (sem imagens também vira "Em breve")
+     layout: 'grade' (padrão, 3 colunas) | 'apresentacao' (1ª peça em
+             destaque na largura toda + as demais em 2 colunas — ideal
+             para slides 16:9)
      ============================================================ */
   const PROJETOS = [
     {
       id: 'conal',
       cliente: 'CONAL',
-      linha: 'Apresentação comercial, 6 páginas — identidade, diagramação e template reutilizável.',
-      acento: '#0B4F8A',
+      linha: 'Apresentação comercial, 3 páginas — identidade, diagramação e template reutilizável.',
+      acento: '#0262C6',
       estado: 'pronto',
+      layout: 'apresentacao',
       imagens: [
-        // { src: '01.jpg', legenda: 'Capa' },
+        { src: '01-capa.jpg',           legenda: 'Capa' },
+        { src: '02-posicionamento.jpg', legenda: 'Posicionamento' },
+        { src: '03-servicos.jpg',       legenda: 'Serviços' },
       ]
     },
     {
@@ -286,7 +306,7 @@
         <span class="count"></span>
         ${p.linha ? `<p class="linha">${esc(p.linha)}</p>` : ''}
       </div>
-      ${pronto ? '<div class="pecas"></div>' : ''}`;
+      ${pronto ? `<div class="pecas${p.layout === 'apresentacao' ? ' apresentacao' : ''}"></div>` : ''}`;
     main.appendChild(sec);
     indice.insertAdjacentHTML('beforeend', `<a href="#p-${esc(p.id)}"><b>${pad(pi + 1)}</b>${esc(p.cliente)}</a>`);
     if (!pronto) { sec.insertAdjacentHTML('beforeend', soonHtml); virarEmBreve(sec); return; }
@@ -298,6 +318,7 @@
       fig.innerHTML = `
         <button type="button" aria-label="Ampliar: ${esc(im.legenda)}">
           <img loading="lazy" alt="${esc(p.cliente)} — ${esc(im.legenda)}">
+          <span class="zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
         </button>
         ${im.legenda ? `<figcaption><b>${pad(ii + 1)}</b>${esc(im.legenda)}</figcaption>` : ''}`;
       const img = fig.querySelector('img');
