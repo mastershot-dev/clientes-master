@@ -109,11 +109,10 @@
   .pecas.apresentacao::after{display:none;}
   .pecas.apresentacao .peca{max-width:none;}
   .pecas.apresentacao .peca img{aspect-ratio:auto;}
-  .pecas.apresentacao .peca:first-child,
-  .pecas.apresentacao .peca:last-child:nth-child(even){grid-column:1/-1;}
-  .pecas.apresentacao .peca:first-child button{border-radius:16px;}
-  .pecas.apresentacao .peca:first-child button:hover img{transform:scale(1.015);}
-  .pecas.apresentacao .peca:first-child figcaption{font-size:1rem;margin-top:14px;}
+  .pecas.apresentacao .peca.largo{grid-column:1/-1;}
+  .pecas.apresentacao .peca.largo button{border-radius:16px;}
+  .pecas.apresentacao .peca.largo button:hover img{transform:scale(1.015);}
+  .pecas.apresentacao .peca.largo figcaption{font-size:1rem;margin-top:14px;}
   @media(max-width:600px){ .pecas.apresentacao{grid-template-columns:1fr;gap:16px;} }
   .peca{margin:0;}
   .peca button{position:relative;display:block;width:100%;padding:0;border:1px solid var(--line);background:var(--bg-card);
@@ -250,6 +249,8 @@
              misturados: banner, roll-up, post, foto) | 'apresentacao' (1ª
              peça em destaque na largura toda + as demais em 2 colunas —
              ideal para slides e mockups no mesmo formato)
+     destaque: true numa imagem do layout 'apresentacao' = ela também vai
+             pra largura toda (ex.: { src: '...', legenda: '...', destaque: true })
      Imagens: JPG ~2000px no lado maior, até ~350 KB, nome NN-nome-curto.jpg
      ============================================================ */
   const PROJETOS = [
@@ -262,7 +263,7 @@
       layout: 'apresentacao',
       imagens: [
         { src: '01-capa.jpg',                 legenda: 'Capa' },
-        { src: '02-posicionamento.jpg',       legenda: 'Posicionamento' },
+        { src: '02-posicionamento.jpg',       legenda: 'Posicionamento', destaque: true },
         { src: '03-servicos.jpg',             legenda: 'Serviços' },
         { src: '04-banner-institucional.jpg', legenda: 'Banner institucional' },
       ]
@@ -270,7 +271,7 @@
     {
       id: 'siemens',
       cliente: 'Siemens',
-      linha: 'Programa de Desenvolvimento de Talentos — capa de apresentação, post, one-pager e banner digital.',
+      linha: 'Ensaio fotográfico dos colaboradores para o catálogo anual e design das peças do Programa de Desenvolvimento de Talentos.',
       acento: '#009999',      // petróleo da Siemens
       estado: 'pronto',
       imagens: [
@@ -298,14 +299,15 @@
     {
       id: 'film-commission',
       cliente: 'SJC Film Commission',
-      linha: 'Registro fotográfico e produção de site e catálogo digital e impresso para a Prefeitura de São José dos Campos.',
-      acento: '#246CC6',      // azul da marca, amostrado do catálogo
+      linha: 'Registro fotográfico da cidade, site e catálogo de locações, nas versões digital e impressa, para a Prefeitura de São José dos Campos.',
+      acento: '#5A62D6',      // índigo do catálogo, clareado pra ler no fundo preto
       estado: 'pronto',
       layout: 'apresentacao',
       imagens: [
-        { src: '01-simbolos-da-cidade.jpg',   legenda: 'Catálogo — Símbolos da cidade' },
-        { src: '02-catalogo-locacoes.jpg',    legenda: 'Catálogo de locações' },
-        { src: '03-registro-fotografico.jpg', legenda: 'Registro fotográfico' },
+        { src: '01-capa-catalogo.jpg',    legenda: 'Capa do catálogo' },
+        { src: '02-abertura-bloco.jpg',   legenda: 'Abertura de bloco — Símbolos da cidade' },
+        { src: '03-pagina-locacao.jpg',   legenda: 'Página de locação' },
+        { src: '04-galeria-locacao.jpg',  legenda: 'Galeria da locação' },
       ]
     },
     {
@@ -352,7 +354,22 @@
     const c = sec.querySelector('.count');
     c.textContent = 'Em breve'; c.classList.add('soon');
   }
+  // 'apresentacao': largura toda = 1ª peça + as marcadas com destaque;
+  // num trecho de peças menores com número ímpar, a última também vai pra largura toda
+  function larguras(grid){
+    if (!grid || !grid.classList.contains('apresentacao')) return;
+    const fs = [...grid.querySelectorAll('.peca')];
+    let trecho = [];
+    const fecha = () => { if (trecho.length % 2) trecho[trecho.length - 1].classList.add('largo'); trecho = []; };
+    fs.forEach((f, i) => {
+      f.classList.remove('largo');
+      if (i === 0 || f.dataset.destaque) { fecha(); f.classList.add('largo'); }
+      else trecho.push(f);
+    });
+    fecha();
+  }
   function contar(sec){
+    larguras(sec.querySelector('.pecas'));
     const fs = sec.querySelectorAll('.peca');
     fs.forEach((f, i) => { const b = f.querySelector('figcaption b'); if (b) b.textContent = pad(i + 1); });
     sec.querySelector('.count').textContent = fs.length + (fs.length === 1 ? ' peça' : ' peças');
@@ -380,6 +397,7 @@
     p.imagens.forEach((im, ii) => {
       const fig = document.createElement('figure');
       fig.className = 'peca';
+      if (im.destaque) fig.dataset.destaque = '1';
       fig.innerHTML = `
         <button type="button" aria-label="Ampliar: ${esc(im.legenda)}">
           <img loading="lazy" alt="${esc(p.cliente)} — ${esc(im.legenda)}">
