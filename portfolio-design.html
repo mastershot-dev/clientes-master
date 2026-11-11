@@ -88,12 +88,29 @@
     .phead .count{justify-self:start;margin-top:8px;}
   }
 
-  .pecas{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start;}
-  @media(max-width:900px){ .pecas{grid-template-columns:repeat(2,1fr);gap:14px;} }
-  @media(max-width:600px){ .pecas{grid-template-columns:1fr;} }
-  /* layout 'apresentacao': capa em destaque + demais em 2 colunas */
-  .pecas.apresentacao{grid-template-columns:repeat(2,1fr);gap:22px;}
-  .pecas.apresentacao .peca:first-child{grid-column:1/-1;}
+  /* layout 'grade': linhas justificadas — cada peça ocupa largura proporcional
+     ao seu formato (--r = largura/altura, lido da própria imagem), então
+     banner, roll-up e post convivem na mesma linha com a mesma altura e
+     nada é cortado. A última linha só estica em parte (o ::after divide a sobra). */
+  .pecas{--h:270px;display:flex;flex-wrap:wrap;gap:18px;}
+  .pecas::after{content:"";flex:1 1 0;}
+  .pecas .peca{--r:1.5;flex:var(--r) 1 calc(var(--r) * var(--h) + 2px);min-width:0;max-width:calc(var(--r) * var(--h) * 1.9);}
+  .pecas .peca img{aspect-ratio:var(--r);}
+  @media(max-width:900px){ .pecas{--h:190px;gap:14px;} }
+  @media(max-width:600px){
+    .pecas{display:grid;grid-template-columns:1fr;}
+    .pecas::after{display:none;}
+    .pecas .peca{max-width:none;}
+    .pecas .peca img{max-height:78vh;object-fit:contain;}
+  }
+  /* layout 'apresentacao': capa em destaque + demais em 2 colunas;
+     se sobrar uma peça sozinha no fim, ela também vai pra largura toda */
+  .pecas.apresentacao{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;align-items:start;}
+  .pecas.apresentacao::after{display:none;}
+  .pecas.apresentacao .peca{max-width:none;}
+  .pecas.apresentacao .peca img{aspect-ratio:auto;}
+  .pecas.apresentacao .peca:first-child,
+  .pecas.apresentacao .peca:last-child:nth-child(even){grid-column:1/-1;}
   .pecas.apresentacao .peca:first-child button{border-radius:16px;}
   .pecas.apresentacao .peca:first-child button:hover img{transform:scale(1.015);}
   .pecas.apresentacao .peca:first-child figcaption{font-size:1rem;margin-top:14px;}
@@ -229,39 +246,41 @@
      Acrescentar uma peça: jogar o arquivo em assets/portfolio/<id>/
      e somar uma linha em `imagens`. Nada além disso.
      estado: 'pronto' | 'em breve'  (sem imagens também vira "Em breve")
-     layout: 'grade' (padrão, 3 colunas) | 'apresentacao' (1ª peça em
-             destaque na largura toda + as demais em 2 colunas — ideal
-             para slides 16:9)
+     layout: 'grade' (padrão — linhas justificadas, aceita formatos
+             misturados: banner, roll-up, post, foto) | 'apresentacao' (1ª
+             peça em destaque na largura toda + as demais em 2 colunas —
+             ideal para slides e mockups no mesmo formato)
+     Imagens: JPG ~2000px no lado maior, até ~350 KB, nome NN-nome-curto.jpg
      ============================================================ */
   const PROJETOS = [
     {
       id: 'conal',
       cliente: 'CONAL',
-      linha: 'Apresentação comercial, 3 páginas — identidade, diagramação e template reutilizável.',
+      linha: 'Apresentação comercial e peças de campanha — identidade, diagramação e template reutilizável.',
       acento: '#0262C6',
       estado: 'pronto',
       layout: 'apresentacao',
       imagens: [
-        { src: '01-capa.jpg',           legenda: 'Capa' },
-        { src: '02-posicionamento.jpg', legenda: 'Posicionamento' },
-        { src: '03-servicos.jpg',       legenda: 'Serviços' },
+        { src: '01-capa.jpg',                 legenda: 'Capa' },
+        { src: '02-posicionamento.jpg',       legenda: 'Posicionamento' },
+        { src: '03-servicos.jpg',             legenda: 'Serviços' },
+        { src: '04-banner-institucional.jpg', legenda: 'Banner institucional' },
       ]
     },
     {
       id: 'mileto',
-      cliente: 'Mileto',
-      linha: '',              // TROCAR: o que foi entregue, em uma linha
-      acento: '',
-      estado: 'em breve',
-      imagens: []
-    },
-    {
-      id: 'siemens',
-      cliente: 'Siemens',
-      linha: '',              // TROCAR: o que foi entregue, em uma linha
-      acento: '#009999',
-      estado: 'em breve',
-      imagens: []
+      cliente: 'Mileto Tech Motors',
+      linha: 'Lançamento da moto elétrica Spike — estande de feira, banners, folder e brindes.',
+      acento: '#B8E000',      // verde-limão neon, amostrado do banner holográfico
+      estado: 'pronto',
+      imagens: [
+        { src: '01-estande-feira.jpg',      legenda: 'Estande de feira' },
+        { src: '02-banner-holografico.jpg', legenda: 'Banner holográfico' },
+        { src: '03-banner-rollup.jpg',      legenda: 'Banner roll-up' },
+        { src: '04-folder-spike.jpg',       legenda: 'Folder Spike' },
+        { src: '05-balcao-brindes.jpg',     legenda: 'Balcão e brindes' },
+        { src: '06-chaveiro-refletivo.jpg', legenda: 'Chaveiro refletivo' },
+      ]
     },
     {
       id: 'film-commission',
@@ -271,7 +290,35 @@
       estado: 'em breve',
       imagens: []
     },
-    // ↓ NOVOS CLIENTES ENTRAM AQUI, no mesmo formato (a ordem do array é a ordem da página)
+    {
+      id: 'ne-oliveira',
+      cliente: 'NE Oliveira',
+      linha: 'Identidade visual para escritório de design de interiores — logotipo, papelaria, brindes e fachada.',
+      acento: '#737655',      // oliva, da paleta impressa na própria peça
+      estado: 'pronto',
+      layout: 'apresentacao',
+      imagens: [
+        { src: '01-kit-identidade.jpg', legenda: 'Kit de identidade e paleta' },
+        { src: '02-logotipo.jpg',       legenda: 'Logotipo' },
+        { src: '03-cartao-visita.jpg',  legenda: 'Cartão de visita' },
+        { src: '04-brindes.jpg',        legenda: 'Brindes para clientes' },
+        { src: '05-fachada.jpg',        legenda: 'Fachada do escritório' },
+      ]
+    },
+    // ↓ NOVOS CLIENTES ENTRAM AQUI, no mesmo formato — o Diversos fica sempre por último (a ordem do array é a ordem da página)
+    {
+      // Bloco coringa: recebe peças avulsas com o tempo. Para somar uma,
+      // jogue o JPG em assets/portfolio/diversos/ e acrescente uma linha
+      // abaixo (legenda no formato 'Cliente — peça').
+      id: 'diversos',
+      cliente: 'Diversos',
+      linha: 'Peças avulsas de projetos variados.',
+      acento: '#00788F',
+      estado: 'pronto',
+      imagens: [
+        { src: '01-bussola-viramundo-flyer.jpg', legenda: 'Bússola Viramundo — flyer' },
+      ]
+    },
   ];
 
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c =>
@@ -328,6 +375,11 @@
       img.addEventListener('error', () => {
         fig.remove();
         if (!grid.children.length) virarEmBreve(sec); else contar(sec);
+      });
+      // formato real da peça alimenta a grade justificada
+      img.addEventListener('load', () => {
+        if (img.naturalWidth && img.naturalHeight)
+          fig.style.setProperty('--r', (img.naturalWidth / img.naturalHeight).toFixed(4));
       });
       img.src = `assets/portfolio/${encodeURIComponent(p.id)}/${encodeURIComponent(im.src)}`;
       fig.querySelector('button').addEventListener('click', () => abrir(grid, img));
